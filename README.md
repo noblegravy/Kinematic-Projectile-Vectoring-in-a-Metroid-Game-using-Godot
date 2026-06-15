@@ -24,19 +24,19 @@ The primary objective was to design a flexible projectile system capable of firi
 
 ### Main Gameplay
 
-![Gameplay](screenshots/gameplay.png)
+![image alt](https://github.com/noblegravy/Kinematic-Projectile-Vectoring-in-a-Metroid-Game-using-Godot/blob/37500f72727a8cbe6dc95574f31f4d1025aa55c9/MAINGAMEPLAY.png
+)
 
 ### Combat System
 
-![Combat](screenshots/combat.png)
+![image alt](https://github.com/noblegravy/Kinematic-Projectile-Vectoring-in-a-Metroid-Game-using-Godot/blob/37500f72727a8cbe6dc95574f31f4d1025aa55c9/Screenshot%202026-06-15%20164537.png)
 
-### Projectile Vectoring
+![image alt](https://github.com/noblegravy/Kinematic-Projectile-Vectoring-in-a-Metroid-Game-using-Godot/blob/37500f72727a8cbe6dc95574f31f4d1025aa55c9/DESTRUCTION.png)
 
-![Projectile System](screenshots/projectile_system.png)
+### Projectile Vectoring (Enemy Robot Follows the Player)
 
-### Level Overview
+![image alt](https://github.com/noblegravy/Kinematic-Projectile-Vectoring-in-a-Metroid-Game-using-Godot/blob/37500f72727a8cbe6dc95574f31f4d1025aa55c9/Screenshot%202026-06-15%20164810.png)
 
-![Level Overview](screenshots/level_overview.png)
 
 ---
 
@@ -92,4 +92,5 @@ This project was developed to gain practical experience with:
 ## Acknowledgements
 
 This project was developed as part of a learning exercise using community resources and tutorials while expanding upon the core concepts through independent implementation and experimentation.
+Big thanks to Clear Code (https://www.youtube.com/@ClearCode) for the great tutorials, and assets.
 
