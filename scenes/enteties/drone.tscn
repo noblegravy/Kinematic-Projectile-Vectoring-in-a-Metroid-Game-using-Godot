@@ -1,0 +1,209 @@
+[gd_scene load_steps=22 format=3 uid="uid://i3ritd7vugwi"]
+
+[ext_resource type="Script" uid="uid://b3uch831y8x2i" path="res://drone.gd" id="1_w5yob"]
+[ext_resource type="Shader" uid="uid://cgrxnfssacbjv" path="res://shaders/drone.tres" id="2_swl2p"]
+[ext_resource type="Texture2D" uid="uid://vyr0ks75oxum" path="res://graphics/characters/drone.png" id="2_x642h"]
+[ext_resource type="Texture2D" uid="uid://bav7n447bnsa5" path="res://graphics/fire/explosion.png" id="3_x642h"]
+[ext_resource type="Texture2D" uid="uid://cbn5tc4c0ckcp" path="res://graphics/lights/l2.png" id="4_568lc"]
+[ext_resource type="AudioStream" uid="uid://dtnqyh7corvdx" path="res://audio/explosion.wav" id="6_ugbhj"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_swl2p"]
+shader = ExtResource("2_swl2p")
+shader_parameter/ColorParameter = Color(0.9241086, 0.29281765, 0, 1)
+shader_parameter/Float = 1.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w5yob"]
+atlas = ExtResource("2_x642h")
+region = Rect2(0, 0, 32, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x642h"]
+atlas = ExtResource("2_x642h")
+region = Rect2(32, 0, 32, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_568lc"]
+atlas = ExtResource("2_x642h")
+region = Rect2(64, 0, 32, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_swl2p"]
+atlas = ExtResource("2_x642h")
+region = Rect2(96, 0, 32, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ugbhj"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w5yob")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x642h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_568lc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_swl2p")
+}],
+"loop": false,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_7lmi3"]
+radius = 7.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_aoefa"]
+radius = 109.07337
+
+[sub_resource type="Animation" id="Animation_swl2p"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("explosion:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_568lc"]
+resource_name = "explosion"
+length = 0.7
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("explosion:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.099999994, 0.2, 0.3, 0.4, 0.5, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.3),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"chain_reaction"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ugbhj"]
+_data = {
+&"RESET": SubResource("Animation_swl2p"),
+&"explosion": SubResource("Animation_568lc")
+}
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_g7la4"]
+radius = 16.0
+
+[sub_resource type="Animation" id="Animation_x642h"]
+resource_name = "light_flicker"
+length = 0.7
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PointLight2D:energy")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.7),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.2, 1.2]
+}
+
+[sub_resource type="Animation" id="Animation_ugbhj"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PointLight2D:energy")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.2]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_7lmi3"]
+_data = {
+&"RESET": SubResource("Animation_ugbhj"),
+&"light_flicker": SubResource("Animation_x642h")
+}
+
+[node name="Drone" type="CharacterBody2D" groups=["Drones"]]
+collision_layer = 4
+collision_mask = 11
+script = ExtResource("1_w5yob")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+material = SubResource("ShaderMaterial_swl2p")
+sprite_frames = SubResource("SpriteFrames_ugbhj")
+metadata/_edit_lock_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_7lmi3")
+metadata/_edit_lock_ = true
+
+[node name="DetectionArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+metadata/_edit_lock_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea"]
+shape = SubResource("CircleShape2D_aoefa")
+
+[node name="explosion" type="Sprite2D" parent="."]
+visible = false
+texture = ExtResource("3_x642h")
+hframes = 8
+metadata/_edit_lock_ = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_ugbhj")
+}
+
+[node name="ExplosionArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+metadata/_edit_lock_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ExplosionArea"]
+shape = SubResource("CircleShape2D_g7la4")
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+position = Vector2(-2.0000002, 2)
+scale = Vector2(0.35625005, 0.48333335)
+color = Color(0.9333264, 4.813075e-06, 9.62615e-07, 1)
+energy = 0.2
+texture = ExtResource("4_568lc")
+
+[node name="AnimationPlayer2" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_7lmi3")
+}
+autoplay = "light_flicker"
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_ugbhj")
+volume_db = -0.46
+
+[connection signal="body_entered" from="DetectionArea" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="DetectionArea" to="." method="_on_area_2d_body_exited"]
+[connection signal="body_entered" from="ExplosionArea" to="." method="_on_explosion_area_body_entered"]
